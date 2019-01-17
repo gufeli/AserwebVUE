@@ -12,10 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('contenido/contenido');
 });
 
-Route::resource('/cargos', 'CargoController');
+Route::get('/cargo', 'CargoController@index');
+Route::post('/cargo/registrar', 'CargoController@store');
+Route::put('/cargo/actualizar', 'CargoController@update');
 
 Route::resource('/sedes', 'SedeController');
 

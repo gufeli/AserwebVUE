@@ -1,6 +1,6 @@
-@extends('layouts.default')
+@extends('principal')
 
-@section('content')
+@section('contenido')
   <div class="container">
             <h2>Crear un nuevo Cargo </h2>
             <hr>

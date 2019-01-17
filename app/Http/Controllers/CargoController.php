@@ -13,9 +13,9 @@ class CargoController extends Controller
      */
     public function index()
     {
-        $cargos = Cargo::paginate(5);
+        $cargos = Cargo::all();
 
-        return view('cargos.index', ['cargos' => $cargos]);
+        return $cargos;
     }
 
     /**
@@ -25,7 +25,7 @@ class CargoController extends Controller
      */
     public function create()
     {
-        return view('cargos.create');
+        // return view('cargos.create');
     }
 
     /**
@@ -36,14 +36,17 @@ class CargoController extends Controller
      */
     public function store(Request $request)
     {   
-        request()->validate([
-            'name' => 'required',
-        ]);
+        // request()->validate([
+        //     'name' => 'required',
+        // ]);
 
-         Cargo::create($request->all());
+        //  Cargo::create($request->all());
 
-         return redirect()->route('cargos.index')
-                        ->with('success','Post add successfully.');
+        //  return redirect()->route('cargos.index')
+        //                 ->with('success','Post add successfully.');
+        $cargo = new Cargo();
+        $cargo->nombre = $request->nombre;
+        $cargo->save();
     }
 
     /**
@@ -54,8 +57,8 @@ class CargoController extends Controller
      */
     public function show($id)
     {
-        $cargo = Cargo::find($id);
-        return view('cargos.show', ['cargo' => $cargo]);
+        // $cargo = Cargo::find($id);
+        // return view('cargos.show', ['cargo' => $cargo]);
     }
 
     /**
@@ -66,9 +69,9 @@ class CargoController extends Controller
      */
     public function edit($id)
     {
-        $cargo = Cargo::find($id);
+        // $cargo = Cargo::find($id);
 
-        return view('cargos.edit', ['cargo' => $cargo]);
+        // return view('cargos.edit', ['cargo' => $cargo]);
     }
 
     /**
@@ -78,15 +81,19 @@ class CargoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {  
-         $this->validate($request, [
-            'name' => 'required',
-        ]);
+        //  $this->validate($request, [
+        //     'name' => 'required',
+        // ]);
 
-        Cargo::find($id)->update($request->all());
-        return redirect()->route('cargos.index')
-                        ->with('success','Cargo updated successfully');
+        // Cargo::find($id)->update($request->all());
+        // return redirect()->route('cargos.index')
+        //                 ->with('success','Cargo updated successfully');
+        $cargo = Cargo::findOrFail($reques->id);
+        $cargo->nombre = $request->nombre;
+        $cargo->save();
+
     }
 
     /**
@@ -97,8 +104,8 @@ class CargoController extends Controller
      */
     public function destroy($id)
     {
-        Cargo::destroy($id);
-        return redirect()->route('cargos.index')
-                        ->with('success', 'Cargo deleted successfully.');
+        // Cargo::destroy($id);
+        // return redirect()->route('cargos.index')
+        //                 ->with('success', 'Cargo deleted successfully.');
     }
 }

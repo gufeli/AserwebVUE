@@ -1,6 +1,6 @@
-@extends('layouts.default')
+@extends('principal')
 
-@section('content')
+@section('contenido')
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
