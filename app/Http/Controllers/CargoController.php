@@ -90,7 +90,7 @@ class CargoController extends Controller
         // Cargo::find($id)->update($request->all());
         // return redirect()->route('cargos.index')
         //                 ->with('success','Cargo updated successfully');
-        $cargo = Cargo::findOrFail($reques->id);
+        $cargo = Cargo::findOrFail($request->id);
         $cargo->nombre = $request->nombre;
         $cargo->save();
 

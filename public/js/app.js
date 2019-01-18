@@ -44052,7 +44052,7 @@ var render = function() {
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
           _c("i", { staticClass: "fa fa-align-justify" }),
-          _vm._v(" Categorías\n                    "),
+          _vm._v(" Cargos\n                    "),
           _c(
             "button",
             {
