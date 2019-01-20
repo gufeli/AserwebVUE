@@ -43,14 +43,27 @@
                                         <button type="button" @click="abrirModal('cargo','actualizar',cargo)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
                                         </button>&nbsp;
-                                        <button type="button" class="btn btn-danger btn-sm">
-                                          <i class="icon-trash"></i>
-                                        </button>
+                                        <template v-if="cargo.condicion">                                      
+                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarCargo(cargo.id)">
+                                                <i class="icon-trash"></i>
+                                            </button>                    
+                                        </template>
+                                        <template v-else>                                      
+                                            <button type="button" class="btn btn-info btn-sm" @click="activarCargo(cargo.id)">
+                                                <i class="icon-check"></i>
+                                            </button>                    
+                                        </template>
                                     </td>
                                     <td v-text="cargo.nombre"></td>
                                     <td ></td>
                                     <td>
-                                        <span class="badge badge-success">Activo</span>
+                                        <div v-if="cargo.condicion">  
+                                            <span class="badge badge-success">Activo</span>
+                                        </div>
+                                        <div v-else>  
+                                            <span class="badge badge-danger">Desactivado</span>
+                                        </div>
+
                                     </td>
                                 </tr>
                             </tbody>
@@ -124,9 +137,9 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            <!--Fin del modal-->
+            <!-- Fin del modal-->
             <!-- Inicio del modal Eliminar -->
-            <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <!-- <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-danger" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -143,10 +156,10 @@
                             <button type="button" class="btn btn-danger">Eliminar</button>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
+                    < /.modal-content>
                 </div>
-                <!-- /.modal-dialog -->
-            </div>
+                < /.modal-dialog >
+            </div> -->
             <!-- Fin del modal Eliminar -->
         </main>
 </template>
@@ -207,6 +220,82 @@
                 console.log(error);
             });
              },
+            desactivarCargo(id){
+                const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                })
+
+                swalWithBootstrapButtons({
+                title: 'Esta seguro de eliminar cargo?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+                    axios.put('/cargo/desactivar',{
+                    'id' : id
+                    }).then(function (response) {
+                    me.listarCargo();
+                    swalWithBootstrapButtons(
+                    'Desactivado!',
+                    'El cargo ha sido desactivado con exito.',
+                    'success'
+                    )
+                    })                  
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                }
+                })
+
+            },
+            activarCargo(id){
+                const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                })
+
+                swalWithBootstrapButtons({
+                title: 'Esta seguro de activar cargo?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+                    axios.put('/cargo/activar',{
+                    'id' : id
+                    }).then(function (response) {
+                    me.listarCargo();
+                    swalWithBootstrapButtons(
+                    'Activado!',
+                    'El registro ha sido activado con exito.',
+                    'success'
+                    )
+                    })                  
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                }
+                })
+
+            },
             validarCargo(){
                 this.errorCargo = 0;
                 this.errorMostrarMsjCargo =[];

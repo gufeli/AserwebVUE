@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cargo extends Model
 {
-    protected $fillable = ['id','name'];
+    protected $fillable = ['nombre','condicion'];
     //prueba
 }

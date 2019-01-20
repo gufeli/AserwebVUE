@@ -46,6 +46,8 @@ class CargoController extends Controller
         //                 ->with('success','Post add successfully.');
         $cargo = new Cargo();
         $cargo->nombre = $request->nombre;
+        $cargo->condicion = '1';
+        
         $cargo->save();
     }
 
@@ -92,6 +94,7 @@ class CargoController extends Controller
         //                 ->with('success','Cargo updated successfully');
         $cargo = Cargo::findOrFail($request->id);
         $cargo->nombre = $request->nombre;
+        $cargo->condicion = '1';
         $cargo->save();
 
     }
@@ -102,10 +105,28 @@ class CargoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        // Cargo::destroy($id);
-        // return redirect()->route('cargos.index')
-        //                 ->with('success', 'Cargo deleted successfully.');
+        $cargo = Cargo::find($request->id);
+        // $cargo->nombre = $request->nombre;
+        $cargo= delete();
     }
+    public function desactivar(Request $request)
+    {  
+        $cargo = Cargo::findOrFail($request->id);
+        $cargo->condicion = '0';
+        $cargo->save();
+
+    }
+
+    public function activar(Request $request)
+    {  
+        $cargo = Cargo::findOrFail($request->id);
+        $cargo->condicion = '1';
+        $cargo->save();
+
+    }
+
+
+
 }

@@ -18,6 +18,8 @@ Route::get('/', function () {
 Route::get('/cargo', 'CargoController@index');
 Route::post('/cargo/registrar', 'CargoController@store');
 Route::put('/cargo/actualizar', 'CargoController@update');
+Route::put('/cargo/desactivar', 'CargoController@desactivar');
+Route::put('/cargo/activar', 'CargoController@activar');
 
 Route::resource('/sedes', 'SedeController');
 
