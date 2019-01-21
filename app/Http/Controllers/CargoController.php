@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cargo;
 
+
 class CargoController extends Controller
 {
     /**
@@ -11,11 +12,21 @@ class CargoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cargos = Cargo::all();
-
-        return $cargos;
+        if(!$request->ajax()) return redirect('/');
+        $cargos = Cargo::paginate(3);
+        return [
+            'pagination' => [
+                'total'         =>$cargos->total(),                                               
+                'current_page'  =>$cargos->currentPage(),
+                'per_page'      =>$cargos->perPage(),                             
+                'last_page'     =>$cargos->lastPage(),                
+                'from'          =>$cargos->firstItem(),          
+                'to'            =>$cargos->lastItem(),
+            ],
+            'cargos' => $cargos
+            ];
     }
 
     /**
@@ -44,6 +55,7 @@ class CargoController extends Controller
 
         //  return redirect()->route('cargos.index')
         //                 ->with('success','Post add successfully.');
+        if(!$request->ajax()) return redirect('/');
         $cargo = new Cargo();
         $cargo->nombre = $request->nombre;
         $cargo->condicion = '1';
@@ -92,6 +104,7 @@ class CargoController extends Controller
         // Cargo::find($id)->update($request->all());
         // return redirect()->route('cargos.index')
         //                 ->with('success','Cargo updated successfully');
+        if(!$request->ajax()) return redirect('/');
         $cargo = Cargo::findOrFail($request->id);
         $cargo->nombre = $request->nombre;
         $cargo->condicion = '1';
@@ -113,6 +126,7 @@ class CargoController extends Controller
     }
     public function desactivar(Request $request)
     {  
+        if(!$request->ajax()) return redirect('/');
         $cargo = Cargo::findOrFail($request->id);
         $cargo->condicion = '0';
         $cargo->save();
@@ -121,6 +135,7 @@ class CargoController extends Controller
 
     public function activar(Request $request)
     {  
+        if(!$request->ajax()) return redirect('/');
         $cargo = Cargo::findOrFail($request->id);
         $cargo->condicion = '1';
         $cargo->save();
