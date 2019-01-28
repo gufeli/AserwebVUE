@@ -149,7 +149,7 @@
                     </div>
                     < /.modal-content>
                 </div>
-                < /.modal-dialog >
+                < /.mmodal-dialog >
             </div> -->
             <!-- Fin del modal Eliminar -->
         </main>
@@ -158,7 +158,7 @@
 <script>
     export default {
         data (){
-            return{
+            return{      
                 cargo_id: 0,
                 nombre : '',
                 arrayCargo : [],
